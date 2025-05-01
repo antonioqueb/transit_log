@@ -45,11 +45,11 @@
             <form string="Bitácora de Tránsito">
                 <header>
                     <button name="action_start" type="object" string="Salir"
-                            modifiers="{'invisible': [['state','!=','draft']]}" />
+                            attrs="{'invisible': [('state','!=','draft')]}"/>
                     <button name="action_arrive" type="object" string="Llegada"
-                            modifiers="{'invisible': [['state','!=','in_transit']]}" />
+                            attrs="{'invisible': [('state','!=','in_transit')]}"/>
                     <button name="action_cancel" type="object" string="Cancelar"
-                            modifiers="{'invisible': [['state','in',['delivered','cancelled']]]}" />
+                            attrs="{'invisible': [('state','in', ['delivered','cancelled'])]}"/>
                     <field name="state" widget="statusbar"
                            statusbar_visible="draft,in_transit,delivered,cancelled"/>
                 </header>
@@ -59,9 +59,10 @@
                         <field name="name" readonly="1"/>
                         <field name="origin"/>
                         <field name="destination"/>
-                        <field name="date_start" readonly="1"/>
+                        <field name="date_start"
+                               attrs="{'readonly': [('state','!=','draft')]}"/>
                         <field name="date_end"
-                               modifiers="{'invisible': [['state','!=','delivered']]}" />
+                               attrs="{'readonly': [('state','!=','delivered')]}"/>
                     </group>
 
                     <notebook>
@@ -88,7 +89,7 @@
                     </notebook>
                 </sheet>
 
-                <!-- NUEVO: Chatter oficial de Odoo 18 -->
+                <!-- Chatter oficial de Odoo 18 -->
                 <chatter/>
             </form>
         </field>
