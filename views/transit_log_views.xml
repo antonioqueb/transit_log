@@ -37,31 +37,26 @@
         </field>
     </record>
 
-    <!-- Vista formulario -->
+    <!-- Vista formulario con chatter -->
     <record id="view_transit_log_form" model="ir.ui.view">
         <field name="name">transit.log.form</field>
         <field name="model">transit.log</field>
         <field name="arch" type="xml">
             <form string="Bitácora de Tránsito" create="true" edit="true">
-                <!-- Encabezado de acciones -->
                 <header>
-                    <button name="action_start"  type="object" string="Salir"
+                    <button name="action_start" type="object" string="Salir"
                             modifiers="{'invisible': [['state','!=','draft']]}"/>
-
                     <button name="action_arrive" type="object" string="Llegada"
                             modifiers="{'invisible': [['state','!=','in_transit']]}"/>
-
                     <button name="action_cancel" type="object" string="Cancelar"
                             modifiers="{'invisible': [['state','in',['delivered','cancelled']]]}"/>
-
                     <field name="state" widget="statusbar"
                            statusbar_visible="draft,in_transit,delivered,cancelled"/>
                 </header>
 
-                <!-- Cuerpo del formulario -->
                 <sheet>
                     <group>
-                        <field name="name"        readonly="1"/>
+                        <field name="name" readonly="1"/>
                         <field name="origin"/>
                         <field name="destination"/>
                         <field name="date_start"/>
@@ -72,13 +67,11 @@
                     <notebook>
                         <page string="Productos">
                             <field name="line_ids" mode="list,form">
-                                <!-- Tabla de líneas -->
                                 <list>
                                     <field name="product_id"/>
                                     <field name="product_uom_qty"/>
                                     <field name="product_uom"/>
                                 </list>
-                                <!-- Formulario de línea -->
                                 <form>
                                     <group>
                                         <field name="product_id"/>
@@ -88,7 +81,6 @@
                                 </form>
                             </field>
                         </page>
-
                         <page string="Notas">
                             <field name="notes" placeholder="Observaciones relevantes…"/>
                         </page>

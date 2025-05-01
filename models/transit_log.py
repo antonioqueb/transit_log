@@ -8,13 +8,13 @@ class TransitLog(models.Model):
     _inherit = ["mail.thread", "mail.activity.mixin"]
     _order = "create_date desc"
 
-    # Cabecera
     name = fields.Char(
         string="Folio",
         required=True,
         copy=False,
         readonly=True,
         default=lambda self: _("Nuevo"),
+        tracking=True,
     )
     date_start = fields.Datetime(
         string="Salida",
@@ -42,7 +42,6 @@ class TransitLog(models.Model):
     )
     notes = fields.Text(string="Notas adicionales")
 
-    # Secuencia automática
     @api.model
     def create(self, vals):
         if vals.get("name", _("Nuevo")) == _("Nuevo"):
@@ -51,7 +50,6 @@ class TransitLog(models.Model):
             ) or _("Nuevo")
         return super().create(vals)
 
-    # Acciones simples de flujo
     def action_start(self):
         self.state = "in_transit"
 
@@ -81,7 +79,6 @@ class TransitLogLine(models.Model):
         domain="[('category_id', '=', product_id.uom_id.category_id)]",
     )
 
-    # Al seleccionar producto, proponemos la UdM por defecto
     @api.onchange("product_id")
     def _onchange_product_id(self):
         if self.product_id:
