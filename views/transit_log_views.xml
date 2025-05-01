@@ -37,12 +37,12 @@
         </field>
     </record>
 
-    <!-- Vista formulario con chatter -->
+    <!-- Vista formulario con chatter estándar de Odoo -->
     <record id="view_transit_log_form" model="ir.ui.view">
         <field name="name">transit.log.form</field>
         <field name="model">transit.log</field>
         <field name="arch" type="xml">
-            <form string="Bitácora de Tránsito" create="true" edit="true">
+            <form string="Bitácora de Tránsito">
                 <header>
                     <button name="action_start" type="object" string="Salir"
                             modifiers="{'invisible': [['state','!=','draft']]}"/>
