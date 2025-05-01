@@ -45,11 +45,11 @@
             <form string="Bitácora de Tránsito">
                 <header>
                     <button name="action_start" type="object" string="Salir"
-                            attrs="{'invisible': [('state','!=','draft')]}"/>
+                            modifiers="{'invisible': [['state','!=','draft']]}"/>
                     <button name="action_arrive" type="object" string="Llegada"
-                            attrs="{'invisible': [('state','!=','in_transit')]}"/>
+                            modifiers="{'invisible': [['state','!=','in_transit']]}"/>
                     <button name="action_cancel" type="object" string="Cancelar"
-                            attrs="{'invisible': [('state','in', ['delivered','cancelled'])]}"/>
+                            modifiers="{'invisible': [['state','in',['delivered','cancelled']]]}"/>
                     <field name="state" widget="statusbar"
                            statusbar_visible="draft,in_transit,delivered,cancelled"/>
                 </header>
@@ -60,9 +60,9 @@
                         <field name="origin"/>
                         <field name="destination"/>
                         <field name="date_start"
-                               attrs="{'readonly': [('state','!=','draft')]}"/>
+                               modifiers="{'readonly': [['state','!=','draft']]}"/>
                         <field name="date_end"
-                               attrs="{'readonly': [('state','!=','delivered')]}"/>
+                               modifiers="{'readonly': [['state','!=','delivered']]}"/>
                     </group>
 
                     <notebook>
