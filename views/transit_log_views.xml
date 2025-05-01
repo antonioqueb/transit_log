@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Menú -->
+    <!-- Menú raíz -->
     <menuitem id="menu_transit_root"
               name="Tránsitos"
               sequence="10"/>
 
-    <menuitem id="menu_transit_log"
-              name="Bitácora"
-              parent="menu_transit_root"
-              action="action_transit_log"
-              sequence="10"/>
-
-    <!-- Acción -->
+    <!-- Acción (debe ir antes de usarla en el menú) -->
     <record id="action_transit_log" model="ir.actions.act_window">
         <field name="name">Bitácora de Tránsitos</field>
         <field name="res_model">transit.log</field>
@@ -24,7 +18,14 @@
         </field>
     </record>
 
-    <!-- Vista lista (Odoo 18 usa <list>) -->
+    <!-- Menú que llama la acción -->
+    <menuitem id="menu_transit_log"
+              name="Bitácora"
+              parent="menu_transit_root"
+              action="action_transit_log"
+              sequence="20"/>
+
+    <!-- Vista lista -->
     <record id="view_transit_log_list" model="ir.ui.view">
         <field name="name">transit.log.list</field>
         <field name="model">transit.log</field>
@@ -90,6 +91,7 @@
                         </page>
                     </notebook>
                 </sheet>
+
                 <div class="oe_chatter">
                     <field name="message_follower_ids" widget="mail_followers"/>
                     <field name="activity_ids" widget="mail_activity"/>
