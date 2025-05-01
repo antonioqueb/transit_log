@@ -37,7 +37,7 @@
         </field>
     </record>
 
-    <!-- Vista formulario con chatter estándar de Odoo -->
+    <!-- Vista formulario con Chatter oficial -->
     <record id="view_transit_log_form" model="ir.ui.view">
         <field name="name">transit.log.form</field>
         <field name="model">transit.log</field>
@@ -45,11 +45,11 @@
             <form string="Bitácora de Tránsito">
                 <header>
                     <button name="action_start" type="object" string="Salir"
-                            modifiers="{'invisible': [['state','!=','draft']]}"/>
+                            modifiers="{'invisible': [['state','!=','draft']]}" />
                     <button name="action_arrive" type="object" string="Llegada"
-                            modifiers="{'invisible': [['state','!=','in_transit']]}"/>
+                            modifiers="{'invisible': [['state','!=','in_transit']]}" />
                     <button name="action_cancel" type="object" string="Cancelar"
-                            modifiers="{'invisible': [['state','in',['delivered','cancelled']]]}"/>
+                            modifiers="{'invisible': [['state','in',['delivered','cancelled']]]}" />
                     <field name="state" widget="statusbar"
                            statusbar_visible="draft,in_transit,delivered,cancelled"/>
                 </header>
@@ -59,9 +59,9 @@
                         <field name="name" readonly="1"/>
                         <field name="origin"/>
                         <field name="destination"/>
-                        <field name="date_start"/>
+                        <field name="date_start" readonly="1"/>
                         <field name="date_end"
-                               modifiers="{'invisible': [['state','!=','delivered']]}"/>
+                               modifiers="{'invisible': [['state','!=','delivered']]}" />
                     </group>
 
                     <notebook>
@@ -82,17 +82,14 @@
                             </field>
                         </page>
                         <page string="Notas">
-                            <field name="notes" placeholder="Observaciones relevantes…"/>
+                            <field name="notes"
+                                   placeholder="Observaciones relevantes…"/>
                         </page>
                     </notebook>
                 </sheet>
 
-                <!-- Chatter estándar correctamente configurado -->
-                <div class="oe_chatter">
-                    <field name="message_follower_ids" widget="mail_followers"/>
-                    <field name="activity_ids" widget="mail_activity"/>
-                    <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'true'}"/>
-                </div>
+                <!-- NUEVO: Chatter oficial de Odoo 18 -->
+                <chatter/>
             </form>
         </field>
     </record>
