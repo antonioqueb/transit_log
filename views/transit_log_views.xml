@@ -75,7 +75,7 @@
                                     <field name="product_id"/>
                                     <field name="product_uom_qty"/>
                                     <field name="product_uom"/>
-                                </tree>
+                                </list>
                                 <form>
                                     <group>
                                         <field name="product_id"/>
