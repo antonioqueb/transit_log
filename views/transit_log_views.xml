@@ -5,20 +5,17 @@
               name="Tránsitos"
               sequence="10"/>
 
-    <!-- Acción (debe ir antes de usarla en el menú) -->
+    <!-- Acción -->
     <record id="action_transit_log" model="ir.actions.act_window">
         <field name="name">Bitácora de Tránsitos</field>
         <field name="res_model">transit.log</field>
         <field name="view_mode">list,form</field>
         <field name="help" type="html">
-            <p>
-                Registra aquí cada movimiento directo a destino sin
-                afectar inventario.
-            </p>
+            <p>Registra cada movimiento directo a destino sin afectar inventario.</p>
         </field>
     </record>
 
-    <!-- Menú que llama la acción -->
+    <!-- Menú secundario -->
     <menuitem id="menu_transit_log"
               name="Bitácora"
               parent="menu_transit_root"
@@ -47,16 +44,22 @@
         <field name="arch" type="xml">
             <form string="Bitácora de Tránsito" create="true" edit="true">
                 <header>
-                    <button name="action_start" type="object"
-                            string="Salir" states="draft"
-                            class="btn-primary"/>
-                    <button name="action_arrive" type="object"
-                            string="Llegada" states="in_transit"
-                            class="btn-success"/>
-                    <button name="action_cancel" type="object"
-                            string="Cancelar" states="draft,in_transit"/>
+                    <!-- Botón SALIR sólo visible en borrador -->
+                    <button name="action_start" type="object" string="Salir"
+                            modifiers="{'invisible': [['state','!=','draft']]}"/>
+
+                    <!-- Botón LLEGADA sólo visible en tránsito -->
+                    <button name="action_arrive" type="object" string="Llegada"
+                            modifiers="{'invisible': [['state','!=','in_transit']]}"/>
+
+                    <!-- Botón CANCELAR visible en borrador y tránsito -->
+                    <button name="action_cancel" type="object" string="Cancelar"
+                            modifiers="{'invisible': [['state','in',['delivered','cancelled']]]}"/>
+
+                    <!-- Barra de estados -->
                     <field name="state" widget="statusbar"
-                           statusbar_visible="draft,in_transit,delivered,cancelled"/>
+                           statusbar_visible="draft,in_transit,delivered,cancelled"
+                           modifiers="{}"/>
                 </header>
 
                 <sheet>
@@ -65,17 +68,20 @@
                         <field name="origin"/>
                         <field name="destination"/>
                         <field name="date_start"/>
-                        <field name="date_end" attrs="{'invisible': [('state','!=','delivered')]}"/>
+                        <field name="date_end"
+                               modifiers="{'invisible': [['state','!=','delivered']]}"/>
                     </group>
 
                     <notebook>
                         <page string="Productos">
-                            <field name="line_ids" mode="tree,form">
+                            <field name="line_ids" mode="list,form">
+                                <!-- LISTA -->
                                 <list>
                                     <field name="product_id"/>
                                     <field name="product_uom_qty"/>
                                     <field name="product_uom"/>
                                 </list>
+                                <!-- FORMULARIO DE LÍNEA -->
                                 <form>
                                     <group>
                                         <field name="product_id"/>
@@ -92,10 +98,11 @@
                     </notebook>
                 </sheet>
 
+                <!-- Chatter -->
                 <div class="oe_chatter">
                     <field name="message_follower_ids" widget="mail_followers"/>
-                    <field name="activity_ids" widget="mail_activity"/>
-                    <field name="message_ids" widget="mail_thread"/>
+                    <field name="activity_ids"        widget="mail_activity"/>
+                    <field name="message_ids"         widget="mail_thread"/>
                 </div>
             </form>
         </field>
